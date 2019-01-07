@@ -1,21 +1,41 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { Text, View } from 'react-native'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { Constants } from 'expo'
+import { createMaterialTopTabNavigator, createAppContainer } from 'react-navigation'
+
+import reducer from './reducers'
+
+import DeckList from './components/DeckList'
+import NewDeck from './components/NewDeck'
+
+const TabNavigator = createMaterialTopTabNavigator({
+  Home: DeckList,
+  NewDeck: NewDeck,
+},
+{
+  tabBarOptions: {
+    style: {
+      backgroundColor: 'green',
+    },
+    indicatorStyle: {
+      backgroundColor: 'blue',
+    },
+  }
+})
+
+const TabContainer = createAppContainer(TabNavigator)
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={{backgroundColor: 'green', height: Constants.statusBarHeight}} />
+        <View style={{flex: 1}}>
+          <TabContainer />
+        </View>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
