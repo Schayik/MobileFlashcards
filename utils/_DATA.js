@@ -1,9 +1,8 @@
 let decks = {
-  "8xf0y6ziyjabvozdd253nd": {
-    id: '8xf0y6ziyjabvozdd253nd',
+  "TestDeck1": {
     name: 'TestDeck1',
     cards: {
-      "7ni6ok3ym7mf1p33lnez": {
+      "8xf0y6ziyjabvozdd253nd": {
         id: '7ni6ok3ym7mf1p33lnez',
         question: 'PSV won the dutch football league last season (17/18)',
         answer: true
@@ -17,35 +16,43 @@ let decks = {
         id: 'loxhs1bqm25b708cmbf3g',
         question: 'Canada is the largest country in the world',
         answer: false
-      }
+      },
     },
   },
-  "vthrdm985a262al8qx3do": {
-    id: 'vthrdm985a262al8qx3do',
+  "TestDeck2": {
     name: 'TestDeck2',
     cards: {
       "xj352vofupe1dqz9emx13r": {
         id: 'xj352vofupe1dqz9emx13r',
         question: 'Red is a color',
         answer: true
-      }
-    }
+      },
+      "vthrdm985a262al8qx3do": {
+        id: 'vthrdm985a262al8qx3do',
+        question: 'Orange is a color',
+        answer: true
+      },
+    },
   },
-  "6ni6ok3ym7mf1p33lnez": {
-    id: '6ni6ok3ym7mf1p33lnez',
+  "TestDeck3": {
     name: 'TestDeck3',
     cards: {
       "vthrdm985a262al8qx3do": {
         id: 'vthrdm985a262al8qx3do',
         question: 'Bike is a color',
         answer: false,
-      }
-    }
-  }
+      },
+      "6ni6ok3ym7mf1p33lnez": {
+        id: '6ni6ok3ym7mf1p33lnez',
+        question: 'PSV is the best',
+        answer: true,
+      },
+    },
+  },
 }
 
 export function _getDecks() {
-  return decks
+  return {...decks}
 }
 
 // export function _getDecks() {

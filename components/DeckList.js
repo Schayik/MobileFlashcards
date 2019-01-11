@@ -12,14 +12,14 @@ class DeckList extends Component {
   }
 
   render() {
-    const { decks } = this.props
+    const { state } = this.props
+
     return (
       <View>
-        <Text>Decks</Text>
-        {decks && Object.keys(decks).map(key => (
+        {state && Object.keys(state).map(key => (
           <View key={key}>
-            <Text>{decks[key].name}</Text>
-            <Text>{Object.keys(decks[key].cards).length}</Text>
+            <Text>{state[key].name}</Text>
+            <Text>{Object.keys(state[key].cards).length}</Text>
           </View>
         ))}
       </View>
@@ -27,6 +27,6 @@ class DeckList extends Component {
   }
 }
 
-const mapStateToProps = ({ decks }) => ({ decks })
+const mapStateToProps = (state) => ({ state })
 
 export default connect(mapStateToProps)(DeckList)

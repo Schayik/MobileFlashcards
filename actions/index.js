@@ -13,7 +13,6 @@ export function receiveDecks() {
 }
 
 function addDeck(deck) {
-  console.log(deck)
   return {
     type: ADD_DECK,
     deck,
@@ -21,9 +20,8 @@ function addDeck(deck) {
 }
 
 export function handleAddDeck(name) {
-  return {
-    type: ADD_DECK,
-    id: generateID(),
+  return addDeck({
     name,
-  }
+    cards: {},
+  })
 }

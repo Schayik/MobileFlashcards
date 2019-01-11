@@ -14,42 +14,47 @@ import { handleAddDeck } from '../actions'
 class NewDeck extends Component {
   state = {
     input: '',
-    showAlert: false,
+    alert: '',
   }
 
   handleTextChange(input) {
     this.setState({
       input,
-      showAlert: false,
+      alert: '',
     })
   }
 
   handleSubmit() {
     const { input } = this.state
-    const { addDeck } = this.props
+    const { state, addDeck } = this.props
 
-    input
-      ? addDeck(input)
-      : this.setState({ showAlert: true })
-
+    if (!input) {
+      this.setState({ alert: 'please enter a name for the deck.' })
+    } else if (state[input]) {
+      this.setState({ alert: 'already exists, please change name.' })
+    } else {
+      addDeck(input)
+    }
   }
 
   render() {
-    const { input, showAlert } = this.state
+    const { input, alert } = this.state
 
     return (
-      <KeyboardAvoidingView behaviour='padding' style={{alignItems: 'center'}}>
-        <Text>NewDeck</Text>
+      <KeyboardAvoidingView behaviour='padding' style={styles.view}>
         <Text>Name of the new deck:</Text>
         <TextInput
           value={input}
           style={styles.input}
+          maxLength={12}
           onChangeText={input => this.handleTextChange(input)}
         />
-        {showAlert &&
-          <Text style={{color: 'red'}}>please enter a name for the deck.</Text>
+        {alert !== '' &&
+          <Text style={{color: 'red'}}>{alert}</Text>
         }
-        <TouchableOpacity onPress={() => this.handleSubmit()}>
+        <TouchableOpacity
+          onPress={() => this.handleSubmit()}
+          style={styles.submitBtn}>
           <Text>Submit</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -58,17 +63,27 @@ class NewDeck extends Component {
 }
 
 const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+    alignItems: 'center',
+  },
   input: {
     borderWidth: 1,
     borderColor: 'green',
     paddingLeft: 8,
     paddingRight: 8,
     width: 100,
+  },
+  submitBtn: {
+    backgroundColor: 'green',
+    borderRadius: 4,
+    padding: 20,
   }
 })
 
+const mapStateToProps = (state) => ({ state })
 const mapDispatchToProps = dispatch => ({
   addDeck: name => dispatch(handleAddDeck(name))
 })
 
-export default connect(null, mapDispatchToProps)(NewDeck)
+export default connect(mapStateToProps, mapDispatchToProps)(NewDeck)
