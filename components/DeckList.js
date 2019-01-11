@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 import { receiveDecks } from '../actions'
+import Deck from './Deck'
 
 class DeckList extends Component {
 
@@ -11,21 +12,49 @@ class DeckList extends Component {
     dispatch(receiveDecks())
   }
 
+  handleClick(key) {
+    this.props.navigation.navigate('Deck', {name: key})
+  }
+
   render() {
     const { state } = this.props
 
     return (
-      <View>
+      <View style={{padding: 40}}>
         {state && Object.keys(state).map(key => (
-          <View key={key}>
-            <Text>{state[key].name}</Text>
-            <Text>{Object.keys(state[key].cards).length}</Text>
-          </View>
+          <TouchableOpacity
+            key={key}
+            style={styles.deck}
+            onPress={() => this.handleClick(key)}>
+            <Text style={styles.deckName}>
+              {state[key].name}
+            </Text>
+            <Text style={styles.cardsAmount}>
+              {Object.keys(state[key].cards).length} Cards
+            </Text>
+          </TouchableOpacity>
         ))}
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  deck: {
+    padding: 20,
+    marginBottom: 40,
+    borderColor: 'grey',
+    borderWidth: 1,
+  },
+  deckName: {
+    fontSize: 24,
+    textAlign: 'center'
+  },
+  cardsAmount: {
+    fontSize: 20,
+    textAlign: 'center'
+  },
+})
 
 const mapStateToProps = (state) => ({ state })
 
