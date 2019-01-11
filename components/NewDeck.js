@@ -26,7 +26,7 @@ class NewDeck extends Component {
 
   handleSubmit() {
     const { input } = this.state
-    const { state, addDeck } = this.props
+    const { state, addDeck, navigation } = this.props
 
     if (!input) {
       this.setState({ alert: 'please enter a name for the deck.' })
@@ -34,6 +34,7 @@ class NewDeck extends Component {
       this.setState({ alert: 'already exists, please change name.' })
     } else {
       addDeck(input)
+      navigation.navigate( "Decks" )
     }
   }
 

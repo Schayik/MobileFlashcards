@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 import { receiveDecks } from '../actions'
@@ -20,7 +20,7 @@ class DeckList extends Component {
     const { state } = this.props
 
     return (
-      <View style={{padding: 40}}>
+      <ScrollView style={{padding: 40}}>
         {state && Object.keys(state).map(key => (
           <TouchableOpacity
             key={key}
@@ -34,7 +34,7 @@ class DeckList extends Component {
             </Text>
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
     )
   }
 }

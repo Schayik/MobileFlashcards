@@ -2,49 +2,67 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
+import { handleAddCard } from '../actions'
+
 class AddCard extends Component {
   state = {
-    question: '',
+    statement: '',
     answer: null,
     alert: '',
   }
 
   handleSubmit() {
-    const { question, answer } = this.state
+    const { statement, answer } = this.state
+    const { addCard, navigation } = this.props
+    const { deckName } = navigation.state.params
 
-    if (question === '') {
+    if (statement === '') {
       this.setState({ alert: 'please fill in the question' })
     } else if (answer === null) {
       this.setState({ alert: 'please choose an answer' })
     } else {
-      console.log(answer)
+      addCard(deckName, statement, answer)
+      navigation.goBack()
     }
   }
 
   render() {
-    const { question, answer } = this.state
+    const { statement, answer, alert } = this.state
 
     return (
       <View style={{padding: 40, alignItems: 'center'}}>
+        <Text style={styles.buttonText}>Statement</Text>
         <TextInput
-          value={question}
+          value={statement}
+          maxLength={100}
           style={styles.input}
-          onChangeText={input => this.setState({ question: input })}>
+          onChangeText={input => this.setState({ statement: input })}>
         </TextInput>
-        {alert &&
-          <Text style={styles.alert}>{alert}</Text>
+
+        <Text style={styles.buttonText}>Answer</Text>
+        { answer !== null && (answer
+            ? <Text style={[styles.buttonText, {color: 'lime'}]}>Correct</Text>
+            : <Text style={[styles.buttonText, {color: '#ff0000'}]}>Incorrect</Text>
+        )}
+
+        <View style={{flexDirection: 'row', marginBottom: 20}}>
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: 'lime', marginRight: 10}]}
+            onPress={() => this.setState({ answer: true })}>
+            <Text style={styles.buttonText}>Correct</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor: '#ff0000'}]}
+            onPress={() => this.setState({ answer: false })}>
+            <Text style={styles.buttonText}>Incorrect</Text>
+          </TouchableOpacity>
+        </View>
+
+        { alert !== '' &&
+          <Text style={{color: 'red'}}>{alert}</Text>
         }
-        <TouchableOpacity
-          underlayColor={'rgba(0,0,0,0.5)'}
-          style={[styles.button, {backgroundColor: 'lime'}]}
-          onPress={() => this.setState({ answer: true })}>
-          <Text style={styles.buttonText}>Correct</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor: '#ff0000'}]}
-          onPress={() => this.setState({ answer: false })}>
-          <Text style={styles.buttonText}>Incorrect</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.submitBtn}
           onPress={() => this.handleSubmit()}>
@@ -59,22 +77,23 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: 'green',
-    paddingLeft: 8,
-    paddingRight: 8,
-    width: 100,
+    alignSelf: 'stretch',
     marginBottom: 20,
+    marginTop: 10,
   },
   alert: {
     color: 'red'
   },
   button: {
+    flex: 1,
     padding: 10,
     marginTop: 20,
+    marginBottom: 20,
     borderRadius: 4,
   },
   submitBtn: {
     padding: 10,
-    marginTop: 40,
+    marginTop: 10,
     borderColor: 'grey',
     borderWidth: 1,
     borderRadius: 4,
@@ -86,4 +105,8 @@ const styles = StyleSheet.create({
 
 })
 
-export default connect()(AddCard)
+const mapDispatchToProps = dispatch => ({
+  addCard: (d, s, a) => dispatch(handleAddCard(d, s, a))
+})
+
+export default connect(null, mapDispatchToProps)(AddCard)
