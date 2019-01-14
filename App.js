@@ -8,15 +8,14 @@ import {
   createStackNavigator,
   createAppContainer
 } from 'react-navigation'
-import devToolsEnhancer from 'remote-redux-devtools'
 
 import reducer from './reducers'
-
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
 import Quiz from './components/Quiz'
 import AddCard from './components/AddCard'
+import { setLocalNotification } from './utils/helpers'
 
 const TabNavigator = createMaterialTopTabNavigator({
   "Decks": DeckList,
@@ -33,8 +32,6 @@ const TabNavigator = createMaterialTopTabNavigator({
   }
 })
 
-// const TabContainer = createAppContainer(TabNavigator)
-
 const StackNavigator = createStackNavigator({
   Home: {
     screen: TabNavigator,
@@ -44,17 +41,28 @@ const StackNavigator = createStackNavigator({
   },
   Deck: {
     screen: Deck,
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: 'green',
+      },
+    }
   },
   Quiz: {
     screen: Quiz,
     navigationOptions: {
       title: 'Quiz',
+      headerStyle: {
+        backgroundColor: 'green',
+      },
     },
   },
   AddCard: {
     screen: AddCard,
     navigationOptions: {
       title: 'Add Card',
+      headerStyle: {
+        backgroundColor: 'green',
+      },
     },
   },
 })
@@ -62,9 +70,14 @@ const StackNavigator = createStackNavigator({
 const StackContainer = createAppContainer(StackNavigator)
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
-      <Provider store={createStore(reducer, devToolsEnhancer())}>
+      <Provider store={createStore(reducer)}>
         <View style={{backgroundColor: 'green', height: Constants.statusBarHeight}} />
         <StackContainer />
       </Provider>

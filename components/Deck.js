@@ -34,7 +34,9 @@ class Deck extends Component {
         <Text style={{fontSize: 20}}>
           {Object.keys(deck.cards).length} Cards
         </Text>
-        { showAlert && <Text style={{color: 'red'}}>Please add a card first.</Text> }
+        { showAlert && Object.keys(deck.cards).length === 0 &&
+          <Text style={{color: 'red'}}>Please add a card first.</Text>
+        }
         <TouchableOpacity
           style={styles.button}
           onPress={() => this.handleStartQuiz()}>

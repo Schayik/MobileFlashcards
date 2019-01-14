@@ -16,22 +16,34 @@ class Quiz extends Component {
 
   render() {
     const { card } = this.props
+    const { showBack } = this.state
 
     return (
       <View style={styles.card}>
         <Text style={styles.question}>{card.question}</Text>
-        <View>
-          <TouchableOpacity
-            style={[styles.button, {backgroundColor: 'lime'}]}
-            onPress={() => this.checkAnswer(true)}>
-            <Text style={styles.buttonText}>Correct</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, {backgroundColor: '#ff0000'}]}
-            onPress={() => this.checkAnswer(false)}>
-            <Text style={styles.buttonText}>Incorrect</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => this.setState({ showBack: !showBack })}>
+          <Text style={{color: 'red', fontSize: 18}}>show {showBack ? 'question' : 'answer'}</Text>
+        </TouchableOpacity>
+        {showBack
+          ? <View>
+              <Text style={{fontSize: 36}}>
+                { card.answer ? 'Yes' : 'No' }
+              </Text>
+            </View>
+          : <View>
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: 'lime'}]}
+                onPress={() => this.checkAnswer(true)}>
+                <Text style={styles.buttonText}>Correct</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, {backgroundColor: '#ff0000'}]}
+                onPress={() => this.checkAnswer(false)}>
+                <Text style={styles.buttonText}>Incorrect</Text>
+              </TouchableOpacity>
+            </View>
+        }
       </View>
     )
   }

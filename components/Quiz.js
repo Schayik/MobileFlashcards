@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 import Card from './Card'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
 
@@ -34,6 +35,10 @@ class Quiz extends Component {
     const keys = Object.keys(cards)
 
     if (progress >= keys.length) {
+
+      clearLocalNotification()
+        .then(setLocalNotification())
+
       return (
         <View style={{padding: 40}}>
           <Text style={styles.text}>

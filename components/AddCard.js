@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 
 import { handleAddCard } from '../actions'
@@ -30,7 +30,7 @@ class AddCard extends Component {
     const { statement, answer, alert } = this.state
 
     return (
-      <View style={{padding: 40, alignItems: 'center'}}>
+      <KeyboardAvoidingView style={{padding: 40, alignItems: 'center'}}>
         <Text style={styles.buttonText}>Statement</Text>
         <TextInput
           value={statement}
@@ -68,7 +68,7 @@ class AddCard extends Component {
           onPress={() => this.handleSubmit()}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -80,6 +80,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginBottom: 20,
     marginTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   alert: {
     color: 'red'

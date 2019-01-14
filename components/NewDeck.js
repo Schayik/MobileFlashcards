@@ -34,7 +34,7 @@ class NewDeck extends Component {
       this.setState({ alert: 'already exists, please change name.' })
     } else {
       addDeck(input)
-      navigation.navigate( "Decks" )
+      navigation.navigate( "Deck", { name: input })
     }
   }
 
@@ -43,7 +43,7 @@ class NewDeck extends Component {
 
     return (
       <KeyboardAvoidingView behaviour='padding' style={styles.view}>
-        <Text>Name of the new deck:</Text>
+        <Text style={styles.text}>Name</Text>
         <TextInput
           value={input}
           style={styles.input}
@@ -56,7 +56,7 @@ class NewDeck extends Component {
         <TouchableOpacity
           onPress={() => this.handleSubmit()}
           style={styles.submitBtn}>
-          <Text>Submit</Text>
+          <Text style={styles.submitText}>Create new Deck</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
     )
@@ -67,19 +67,30 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    padding: 40,
+  },
+  text: {
+    fontSize: 24,
+    textAlign: 'center',
   },
   input: {
     borderWidth: 1,
     borderColor: 'green',
-    paddingLeft: 8,
-    paddingRight: 8,
-    width: 100,
+    padding: 8,
+    alignSelf: 'stretch',
+    fontSize: 24,
+    textAlign: 'center'
   },
   submitBtn: {
     backgroundColor: 'green',
     borderRadius: 4,
-    padding: 20,
-  }
+    padding: 12,
+    marginTop: 10,
+  },
+  submitText: {
+    fontSize: 20
+  },
 })
 
 const mapStateToProps = (state) => ({ state })

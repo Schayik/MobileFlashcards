@@ -1,7 +1,9 @@
 {
   "expo": {
     "name": "mobile-flashcards",
+    "description": "easy way to train yourself to memorize things",
     "slug": "mobile-flashcards",
+    "version": "1.0",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -10,7 +12,10 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/psv.png",
+    "notification": {
+      "icon": "./assets/psv.png",
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -23,7 +28,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "mobile-flashcards"
+    },
+    "android": {
+      "package": "mobile-flashcards"
     }
   }
 }

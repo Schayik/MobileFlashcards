@@ -49,14 +49,16 @@ let decks = {
       },
     },
   },
+  "TestDeck4": {
+    name: 'TestDeck4',
+    cards: {},
+  },
+  "TestDeck5": {
+    name: 'TestDeck5',
+    cards: {},
+  },
 }
 
 export function _getDecks() {
   return {...decks}
 }
-
-// export function _getDecks() {
-//   return new Promise((res, rej) => {
-//     setTimeout(() => res({...decks}), 200)
-//   })
-// }
