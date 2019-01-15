@@ -29,10 +29,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "mobile-flashcards"
     },
     "android": {
-      "package": "mobile-flashcards"
+      "package": "com.pimvanschayik.mobile_flashcards"
     }
   }
 }
