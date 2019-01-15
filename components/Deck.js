@@ -25,6 +25,7 @@ class Deck extends Component {
   render() {
     const { deck, navigation } = this.props
     const { showAlert } = this.state
+    const length = Object.keys(deck.cards).length
 
     return (
       <View style={styles.deck}>
@@ -32,9 +33,9 @@ class Deck extends Component {
           {deck.name}
         </Text>
         <Text style={{fontSize: 20}}>
-          {Object.keys(deck.cards).length} Cards
+          {length} {length === 1 ? 'Card' : 'Cards'}
         </Text>
-        { showAlert && Object.keys(deck.cards).length === 0 &&
+        { showAlert && length === 0 &&
           <Text style={{color: 'red'}}>Please add a card first.</Text>
         }
         <TouchableOpacity

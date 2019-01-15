@@ -24,6 +24,7 @@ Here, the user can write down a statement and choose the right answer to create 
 card which is added to the deck when submitted.
 
 ## Development
+Development was done on an Android device
 
 ### to start development
 * install all project dependencies with `npm install`

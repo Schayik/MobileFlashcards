@@ -10,6 +10,7 @@ class Quiz extends Component {
   state = {
     progress: 0,
     score: 0,
+    showBack: false,
   }
 
   restart() {
@@ -24,13 +25,16 @@ class Quiz extends Component {
 
     answer && this.setState({ score: (score + 1) })
 
-    this.setState({ progress: (progress + 1) })
+    this.setState({
+      progress: (progress + 1),
+      showBack: false,
+    })
   }
 
   render() {
     const { navigation } = this.props
     const { cards } = navigation.state.params
-    const { progress, score } = this.state
+    const { progress, score, showBack } = this.state
 
     const keys = Object.keys(cards)
 
@@ -68,10 +72,25 @@ class Quiz extends Component {
         <Text style={styles.text}>
           Progress: {`${progress}/${keys.length}`}
         </Text>
+
         <Card
           card={cards[keys[progress]]}
-          handleAnswer={answer => this.handleAnswer(answer)}
+          showBack={showBack}
+          handleTurn={() => this.setState({ showBack: !showBack })}
         />
+
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <TouchableOpacity
+            style={[styles.button2, {backgroundColor: 'lime', marginRight: 20}]}
+            onPress={() => this.handleAnswer(true)}>
+            <Text style={styles.buttonText}>Correct</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button2, {backgroundColor: '#ff0000'}]}
+            onPress={() => this.handleAnswer(false)}>
+            <Text style={styles.buttonText}>Incorrect</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -89,6 +108,15 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom: 20,
   },
+  button2: {
+    padding: 10,
+    marginTop: 20,
+    borderRadius: 4,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 20,
+  }
 })
 
 export default connect()(Quiz)

@@ -34,6 +34,7 @@ class NewDeck extends Component {
       this.setState({ alert: 'already exists, please change name.' })
     } else {
       addDeck(input)
+      this.setState({ input: '' })
       navigation.navigate( "Deck", { name: input })
     }
   }

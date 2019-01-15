@@ -6,58 +6,47 @@ import { handleAddCard } from '../actions'
 
 class AddCard extends Component {
   state = {
-    statement: '',
-    answer: null,
+    question: '',
+    answer: '',
     alert: '',
   }
 
   handleSubmit() {
-    const { statement, answer } = this.state
+    const { question, answer } = this.state
     const { addCard, navigation } = this.props
     const { deckName } = navigation.state.params
 
-    if (statement === '') {
+    if (question === '') {
       this.setState({ alert: 'please fill in the question' })
-    } else if (answer === null) {
-      this.setState({ alert: 'please choose an answer' })
+    } else if (answer === '') {
+      this.setState({ alert: 'please fill in an answer' })
     } else {
-      addCard(deckName, statement, answer)
+      addCard(deckName, question, answer)
       navigation.goBack()
     }
   }
 
   render() {
-    const { statement, answer, alert } = this.state
+    const { question, answer, alert } = this.state
 
     return (
       <KeyboardAvoidingView style={{padding: 40, alignItems: 'center'}}>
-        <Text style={styles.buttonText}>Statement</Text>
+
+        <Text style={styles.buttonText}>Question</Text>
         <TextInput
-          value={statement}
+          value={question}
           maxLength={100}
           style={styles.input}
-          onChangeText={input => this.setState({ statement: input })}>
+          onChangeText={input => this.setState({ question: input })}>
         </TextInput>
 
         <Text style={styles.buttonText}>Answer</Text>
-        { answer !== null && (answer
-            ? <Text style={[styles.buttonText, {color: 'lime'}]}>Correct</Text>
-            : <Text style={[styles.buttonText, {color: '#ff0000'}]}>Incorrect</Text>
-        )}
-
-        <View style={{flexDirection: 'row', marginBottom: 20}}>
-          <TouchableOpacity
-            style={[styles.button, {backgroundColor: 'lime', marginRight: 10}]}
-            onPress={() => this.setState({ answer: true })}>
-            <Text style={styles.buttonText}>Correct</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.button, {backgroundColor: '#ff0000'}]}
-            onPress={() => this.setState({ answer: false })}>
-            <Text style={styles.buttonText}>Incorrect</Text>
-          </TouchableOpacity>
-        </View>
+        <TextInput
+          value={answer}
+          maxLength={100}
+          style={styles.input}
+          onChangeText={input => this.setState({ answer: input })}>
+        </TextInput>
 
         { alert !== '' &&
           <Text style={{color: 'red'}}>{alert}</Text>
@@ -86,13 +75,6 @@ const styles = StyleSheet.create({
   alert: {
     color: 'red'
   },
-  button: {
-    flex: 1,
-    padding: 10,
-    marginTop: 20,
-    marginBottom: 20,
-    borderRadius: 4,
-  },
   submitBtn: {
     padding: 10,
     marginTop: 10,
@@ -108,7 +90,7 @@ const styles = StyleSheet.create({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addCard: (d, s, a) => dispatch(handleAddCard(d, s, a))
+  addCard: (d, q, a) => dispatch(handleAddCard(d, q, a))
 })
 
 export default connect(null, mapDispatchToProps)(AddCard)

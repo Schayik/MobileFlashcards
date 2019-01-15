@@ -18,6 +18,7 @@ class DeckList extends Component {
 
   renderItem = ({ item }) => {
     const { decks } = this.props
+    const length = Object.keys(decks[item].cards).length
 
     return (
       <TouchableOpacity
@@ -28,7 +29,7 @@ class DeckList extends Component {
           {item}
         </Text>
         <Text style={styles.cardsAmount}>
-          {Object.keys(decks[item].cards).length} Cards
+          {length} {length === 1 ? 'Card' : 'Cards'}
         </Text>
       </TouchableOpacity>
     )
